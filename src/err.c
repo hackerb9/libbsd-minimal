@@ -27,6 +27,7 @@
  * SUCH DAMAGE.
  */
 
+#include <errno.h>
 #if defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)err.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
@@ -34,7 +35,6 @@ static char sccsid[] = "@(#)err.c	8.1 (Berkeley) 6/4/93";
 __FBSDID("$FreeBSD: release/10.0.0/lib/libc/gen/err.c 177893 2008-04-03 20:36:44Z imp $");
 
 #include <bsd/err.h>
-#include <errno.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
