@@ -1,0 +1,53 @@
+name: draft
+# Mostly from https://jon.sprig.gs/blog/post/2442
+# Create a draft release on every push.
+
+on:
+  push:
+
+jobs:
+
+  build_release:
+    name: Build Release
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            release_suffix: ubuntu
+          - os: macos-latest
+            release_suffix: mac
+          - os: windows-latest
+            release_suffix: windows
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Compile, verify, and create archives
+        run: |
+          ./configure
+          make
+
+      - name: Machine dependent file upload
+        uses: softprops/action-gh-release@v2
+        with:
+          name: draftbuild
+          draft: true
+          prerelease: false
+          generate_release_notes: false
+          files: |
+            libbsd-dev-*.tar.gz
+
+      - name: Source code upload
+        if: matrix.os == 'ubuntu-latest'
+        uses: softprops/action-gh-release@v2
+        with:
+          name: draftbuild
+          draft: true
+          prerelease: false
+          generate_release_notes: false
+          files: |
+            libbsd-minimal.tar.gz
+       
