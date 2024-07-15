@@ -27,6 +27,7 @@ jobs:
 
       - name: Compile, verify, and create archives
         run: |
+          ls
           ./configure
           make
 
